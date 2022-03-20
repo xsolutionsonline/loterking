@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="toolbar-background--loter">
+    
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="registerForm">
+    <ion-item>
+      <ion-label position="floating">Nombre y Apellido * </ion-label>
+      <ion-input type="text" formControlName="names" name="name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Usuario *</ion-label>
+      <ion-input type="text" formControlName="userName" name="userName"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">País</ion-label>
+      <ion-select formControlName="country">
+        <ion-select-option value="Colombia">Colombia</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">email *</ion-label>
+      <ion-input
+        type="email"
+        formControlName="email"
+        name="email"
+        style="text-transform: none"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Repetir email * </ion-label>
+      <ion-input
+        type="email"
+        formControlName="emailNew"
+        name="email"
+        style="text-transform: none"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Contraseña *</ion-label>
+      <ion-input
+        style="text-transform: none"
+        [type]="typePassword"
+        formControlName="password"
+        name="password"
+      ></ion-input>
+      <ion-icon name="eye-outline" size="small" slot="end" style="padding-top: 10px;"
+      (click)="viewPassword('text')" *ngIf="this.typePassword === 'password'"
+      ></ion-icon>
+
+      <ion-icon name="eye-off-outline" size="small" slot="end" style="padding-top: 10px;"
+      (click)="viewPassword('password')" *ngIf="this.typePassword === 'text'"
+      ></ion-icon>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="floating">Repetir Contraseña *</ion-label>
+      <ion-input
+        style="text-transform: none"
+        [type]="typePassword"
+        formControlName="passwordNew"
+        name="password"
+      ></ion-input>
+      <ion-icon name="eye-outline" size="small" slot="end" style="padding-top: 10px;"
+      (click)="viewPassword('text')" *ngIf="this.typePassword === 'password'"
+      ></ion-icon>
+
+      <ion-icon name="eye-off-outline" size="small" slot="end" style="padding-top: 10px;"
+      (click)="viewPassword('password')" *ngIf="this.typePassword === 'text'"
+      ></ion-icon>
+    </ion-item>
+   
+    <ion-button expand="block" (click)="OnSubmitRegister()">
+      Registrarse
+    </ion-button>
+    <p class="ion-text-center" routerLink="/login">Ya tengo Cuenta</p>
+  </form>
+</ion-content>

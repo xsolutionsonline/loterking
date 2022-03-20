@@ -1,0 +1,104 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+@font-face {
+    font-family: "custom";
+    font-style: normal;
+    font-weight: normal;
+    src: url("./assets/fonts/montserrat/Montserrat-SemiBold.ttf");
+  } 
+  
+  @font-face {
+    font-family: "customDigital";
+    font-style: normal;
+    font-weight: normal;
+    src: url("./assets/fonts/ds_digital/DS-DIGI.TTF");
+  }
+  
+
+  
+
+  .labelItemIcon {
+    --background: reba(255, 255, 255, 0);
+    --border-width: 0px;
+    --padding-start: 0px;
+    --padding-end: 0px;
+    --padding: 0px;
+    --padding-inline-end: 0px;
+    --margin: 0px;
+    --inner-border-width: 0px;
+    --inner-box-shadow: 0px;
+    --inner-padding-bottom: 0px;
+    --inner-padding-end: 0px;
+    --inner-padding-start: 0px;
+    --inner-padding-top: 0px;
+    --padding-bottom: 0px;
+    --padding-top: 0px;
+  }
+  
+  
+   .alert-head.sc-ion-alert-md  {
+    padding: 0px;
+    text-align: center;
+    background-color: red;
+    color: white;
+    margin-bottom: 15px;
+  }
+
+  .alert-title.sc-ion-alert-md {
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 0px;
+    text-align: center;
+}
+
+.alert-message.sc-ion-alert-md {
+  max-height: 266px;
+  font-size: 16px;
+  color: black;
+  text-align: center;
+}
+
+.alert-button.sc-ion-alert-md {
+  border-radius: 2px;
+  margin-left: 0;
+  margin-right: 8px;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  position: relative;
+  background-color: black;
+  color: white;
+  font-weight: 500;
+  text-align: end;
+  text-transform: uppercase;
+  overflow: hidden;
+}

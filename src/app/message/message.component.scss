@@ -1,0 +1,82 @@
+ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+}
+
+ion-label {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+ion-item h2 {
+  font-weight: 600;
+  margin: 0;
+}
+
+ion-item p {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 95%;
+}
+
+ion-item .date {
+  float: right;
+  align-items: center;
+  display: flex;
+  background-color: black;
+  color:white;
+}
+
+ion-item ion-icon {
+  color: #c9c9ca;
+}
+
+ion-item ion-note {
+  font-size: 15px;
+  margin-right: 8px;
+  font-weight: normal;
+}
+
+ion-item ion-note.md {
+  margin-right: 14px;
+}
+
+
+.dot {
+  display: block;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  align-self: start;
+  margin: 0px 0px 0px 10px;
+  background: var(--ion-color-secondary);
+}
+
+.dot--right {
+  display: block;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  align-self: start;
+  margin: 0px 10px 0px 0px;
+  background: var(--ion-color-secondary);
+}
+
+ion-footer ion-title {
+  font-size: 11px;
+  font-weight: normal;
+}
+
+.button-black {
+  background-image: url(https://firebasestorage.googleapis.com/v0/b/lotterking-a692c.appspot.com/o/BotonNegro.png?alt=media&token=04cf2cf0-af36-4407-b064-81563bb290a9);    
+}
+
+.img {
+  display: block;
+  object-fit: inherit;
+  object-position: inherit;
+  height: 70px;
+  width: 70px;
+}
+

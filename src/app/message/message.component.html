@@ -1,0 +1,28 @@
+
+    <ion-grid style="padding: 0px;">
+      <ion-row [ngStyle]="{'background-color':player?.uid === idWin ? 'red':player?.uid === id ?  '#AAB7B8': ''}" style="margin: 0px;padding: 0px;height: 4.5em;">
+        <ion-col style="height: 4.5em; margin: 0px;padding: 0px;border:1px solid gray"  size="3">
+          <div style="display: flex;margin-top: 16px;">
+            <div slot="start" class="dot"><p style="color: white;text-align: center;margin: 10px;">{{player?.positionOne}}</p></div>
+            <div slot="start" class="dot--right"><p style="color: white;text-align: center;margin: 10px;">{{player?.positionTwo}}</p></div>
+          </div>
+        </ion-col>
+        <ion-col style="height: 4.5em; margin: 0px;padding: 0px;border:1px solid gray">
+         <p style="text-align: center;margin-top: 23px;"> {{ player?.userName }}</p>
+        </ion-col>
+        <ion-col style="height: 4.5em; margin: 0px;padding: 0px;border:1px solid gray" size="2.5">
+          <span class="date">
+            <div style="display: grid;">
+            <ion-note style="background-color: black; color: white;text-align: center;">{{ player?.lastCron }}</ion-note>
+            <p style="text-align: center;margin: 10px 0px 0px 0px;font-size: 18px;font-weight: bold;">{{player?.points}}</p>
+          </div>
+          </span>
+        </ion-col>
+        <ion-col style="height: 4.5em; margin: 0px;padding: 0px;border:1px solid gray" size="2.5">
+          <div (click)="update()">
+            <ion-img [src]="player.src? player.src: item.src" class="img"></ion-img>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  

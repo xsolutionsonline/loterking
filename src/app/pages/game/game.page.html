@@ -1,0 +1,34 @@
+<ion-header [translucent]="true" >
+  <ion-toolbar>
+  <div class="toolbar-background--loter">
+    
+  </div>
+      
+</ion-toolbar>
+<div class="chronometer-container">
+  <div class="minute-container" style="margin-left: 80px;">{{minuteOutput}}:</div>
+  <div class="second-container">{{secondsOutput}}:</div>
+  <div class="milisecond-container">{{miliSecondsOutput}}</div>
+</div>
+<ion-grid style="margin: 0px;padding: 0px;">
+  <ion-row style="background: #AAB7B8;height: 25px;padding: 0px;border:1px solid gray">
+    <ion-col size="3" style="height: 25px;margin: 0px;padding: 0px;border:1px solid black">
+      <p style="margin: 0px;color: white;text-align: center;margin-top: 1px;">Posición</p>
+    </ion-col>
+    <ion-col  style="height: 25px;margin: 0px;padding: 0px;border:1px solid black">
+      <p style="margin: 0px;color: white;text-align: center;margin-top: 1px;">Nombres</p>
+    </ion-col>
+    <ion-col size="2.5" style="height: 25px;margin: 0px;padding: 0px;border:1px solid black">
+      <p style="margin: 0px;color: white;text-align: center;margin-top: 1px;"> Puntos</p>
+    </ion-col>
+    <ion-col size="2.5" style="height: 25px;margin: 0px;padding: 0px;border:1px solid black">
+      <p style="margin: 0px;color: white;text-align: center;margin-top: 1px;">Votar</p>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+ <ion-list style="padding: 0px ;" *ngIf="lottery">
+    <app-message *ngFor="let player of playersView" [player]="player" [id]="customer.uid" [idWin]="winner" (updatePlayer)="updatePlayer($event)"></app-message>
+  </ion-list>
