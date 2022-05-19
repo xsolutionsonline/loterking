@@ -1,6 +1,6 @@
 
     <ion-grid style="padding: 0px;">
-      <ion-row [ngStyle]="{'background-color':player?.uid === idWin ? 'red':player?.uid === id ?  '#AAB7B8': ''}" style="margin: 0px;padding: 0px;height: 4.5em;">
+      <ion-row [ngStyle]="{'background-color':player?.uid === idWin ? 'red':player?.color === 'blue' ?  player?.uid === id ?  '#AAB7B8':'#99F0FF':player?.uid === id ?  '#AAB7B8': ''}" style="margin: 0px;padding: 0px;height: 4.5em;">
         <ion-col style="height: 4.5em; margin: 0px;padding: 0px;border:1px solid gray"  size="3">
           <div style="display: flex;margin-top: 16px;">
             <div slot="start" class="dot"><p style="color: white;text-align: center;margin: 10px;">{{player?.positionOne}}</p></div>
@@ -18,10 +18,10 @@
           </div>
           </span>
         </ion-col>
-        <ion-col style="height: 4.5em; margin: 0px;padding: 0px;border:1px solid gray" size="2.5">
-          <div (click)="update()">
-            <ion-img [src]="player.src? player.src: item.src" class="img"></ion-img>
-          </div>
+        <ion-col style="height: 4.5em; margin: 0px;padding: 0px;border:1px solid gray; display: flex;" size="2.5">
+            <ion-card (click)="update(player)" style="background-color: transparent;">
+              <img [src]="player.src ? player.src : 'assets/img/redButton.jpg'" class="img">
+            </ion-card>                      
         </ion-col>
       </ion-row>
     </ion-grid>

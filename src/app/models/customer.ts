@@ -18,7 +18,8 @@ export interface Customer {
     positionTwo?:string;
     id?: string;
     uid?: string;
+    color?:string;
     verificado?: boolean;
-  status: boolean;
+    status: boolean;
   
 }

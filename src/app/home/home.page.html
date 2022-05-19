@@ -1,85 +1,132 @@
-<ion-header [translucent]="true" >
+<ion-header [translucent]="true">
   <ion-toolbar>
-  <div class="toolbar-background--loter">
-    
-  </div>
-  <span style="display: flex;
+    <div class="toolbar-background--loter">
+
+    </div>
+    <span style="display: flex;
   justify-content: space-between;
   flex-wrap: wrap;background-color: #AAB7B8;">
-    <ion-note  style="color: white;background-color: #AAB7B8;font-size: 18px;margin-left: 5px;">Bienvenido! {{customer?.userName}}</ion-note>  
-    <ion-note style="color: white;background-color: #AAB7B8;font-size: 18px;margin-right: 6px;"> Saldo: {{customer?.accountBalance | currency: 'USD' : 'symbol' : '1.0-0' }} </ion-note>
-  </span>
-  
-</ion-toolbar>
+      <ion-note style="color: white;background-color: #AAB7B8;font-size: 18px;margin-left: 5px;">Bienvenido!
+        {{customer?.userName}}</ion-note>
+      <ion-note style="color: white;background-color: #AAB7B8;font-size: 18px;margin-right: 6px;"> Saldo:
+        {{customer?.accountBalance | currency: 'USD' : 'symbol' : '1.0-0' }} </ion-note>
+    </span>
+
+  </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <div class="card-game">
-    <div class="acummulated">
-      {{lottery?.winningPot| currency: 'USD' : 'symbol' : '1.0-0' }}
+<ion-content [fullscreen]="true" *ngIf="lottery">
+  <div style="height: 100%;">
+    <div style="height: 379px">
+      <ion-slides #slideHome pager="true" [options]="slideOpts" style="margin-top: 25px;" (ionSlideDidChange)="changeSlide($event)"
+      *ngFor="let item of lotteries">
+        <ion-slide style="height: 340px;" id="uno">
+          <h1 style="    position: absolute;
+          z-index: 1;
+          background-color: #AAB7B8;
+          color: white;
+          padding-right: 10px;
+          margin-bottom: 340px;
+          margin-top: 10px;
+          padding-left: 10px;">{{lottery.title}}</h1>
+          <div id="capa1">
+         
+            <ion-grid fixed>
+              
+              <ion-row>
+                <ion-col size="12">
+                  <p class="acummulated"> {{lottery?.winningPot| currency: 'USD' : 'symbol' : '1.0-0' }}</p>
+                  <p style="font-size: 21px;color: transparent;margin: 13px;
+                  padding: 0px;">aqui cualquie</p>
+                    
+                  <div class="chronometer-container">
+                    
+                    <div class="hour-container" style="font-size: 14px;width: 60px;
+                     font-family: Verdana, Geneva, Tahoma, sans-serif;margin-top: 15px;" *ngIf="days">
+                      <ion-note style="color: white;margin-right: 7px;margin-left: 5px;margin-top: 3px;">Faltan </ion-note>{{days}}
+                    </div>
+                    <div class="minute-container" style="padding-left: 16px;">{{hourOutput}}:</div>
+                    <div class="second-container">{{minuteOutput}}:</div>
+                    <div class="milisecond-container">{{secondsOutput}}</div>
+                  </div>
+                </ion-col>                
+              </ion-row>
+              
+            </ion-grid>
+           
+           
+          </div>
+
+         
+
+
+          <div id="capa2"> <img src="../assets/img/fondo.png" /> </div>
+        </ion-slide>        
+      </ion-slides>
+
     </div>
-    <div class="chronometer-container">
-      <div class="hour-container"
-       style="padding-left: 5px; margin-left: 1.8em;font-size: 14px;width: 60px;margin-top: 7px;padding-right: 10px;
-       font-family: Verdana, Geneva, Tahoma, sans-serif;" *ngIf="days"><ion-note style="color: white;margin-right: 7px;margin-left: 5px;">Faltan </ion-note>{{days}}</div>
-      <div class="minute-container" style="padding-left: 16px;">{{hourOutput}}:</div>
-      <div class="second-container">{{minuteOutput}}:</div>
-      <div class="milisecond-container">{{secondsOutput}}</div>
+   
+    <div style="height: 30%;">
+      <ion-button (click)="presentAlertConfirm()" expand="block" shape="round" color="success" style="margin: 10px;"
+        *ngIf="!existPlayer" >
+        {{existPlayer ? 'Ya estas inscrito':'Jugar'}}
+      </ion-button>
+      <ion-button (click)="playing()" expand="block" shape="round" color="success" style="margin: 10px;"
+        *ngIf="existPlayer">
+        Sorteo
+      </ion-button>
+      <ion-grid fixed *ngIf="existPlayer">
+        <ion-row style="margin: 0px;padding: 0px;height: 30px;">
+          <ion-col size="3"></ion-col>
+          <ion-col size="6">
+            <p style="font-weight: bold;text-align: center;">Su Número es</p>
+          </ion-col>
+          <ion-col size="3"></ion-col>
+        </ion-row>
+        <ion-row style="margin: 0px;padding: 0px;">
+          <ion-col size="3"></ion-col>
+          <ion-col size="6" style="padding-left: 17px;">
+            <div style="display: flex;margin-top: 16px;padding: 0px 15px 2px 20px ;background-color:rgb(233, 233, 236)">
+              <div slot="start" class="dot">
+                <p style="color: white;text-align: center;margin: 10px;">{{customer.positionOne}}</p>
+              </div>
+              <div slot="start" class="dot--right">
+                <p style="color: white;text-align: center;margin: 10px;">{{customer.positionTwo}}</p>
+              </div>
+            </div>
+          </ion-col>
+          <ion-col size="3"></ion-col>
+          <ion-col size="3">
+
+          </ion-col>
+          <ion-col size="6">
+
+          </ion-col>
+          <ion-col size="3">
+
+          </ion-col>
+
+        </ion-row>
+      </ion-grid>
     </div>
   </div>
-  <ion-button (click)="presentAlertConfirm()" expand="block" shape="round"color="success" style="margin: 10px;" *ngIf="!existPlayer">
-    Jugar
-  </ion-button>
-<ion-grid fixed *ngIf="existPlayer">
-  <ion-row style="margin: 0px;padding: 0px;height: 30px;">
-    <ion-col size="3"></ion-col>
-    <ion-col size="6">
-      <p style="font-weight: bold;text-align: center;">Su Número es</p>
-    </ion-col>
-    <ion-col size="3"></ion-col>
-  </ion-row>
-  <ion-row style="margin: 0px;padding: 0px;">
-    <ion-col size="3"></ion-col>
-    <ion-col size="6" style="padding-left: 17px;">
-      <div style="display: flex;margin-top: 16px;padding: 0px 15px 2px 20px ;background-color:rgb(233, 233, 236)">
-        <div slot="start" class="dot"><p style="color: white;text-align: center;margin: 10px;">{{customer.positionOne}}</p></div>
-        <div slot="start" class="dot--right"><p style="color: white;text-align: center;margin: 10px;">{{customer.positionTwo}}</p></div>
-      </div>
-    </ion-col>
-    <ion-col size="3"></ion-col>
-    <ion-col size="3">
-      
-    </ion-col>
-    <ion-col size="6">
-      <ion-button (click)="playing()" expand="block" shape="round"color="success" style="margin: 10px;">
-        Sorteo
-      </ion-button>  
-    </ion-col>
-    <ion-col size="3">
-      
-    </ion-col>
-    
-  </ion-row>
-</ion-grid>
-  
- 
-  
+
 </ion-content>
 <ion-footer>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-button (click)="onClick()" style="margin-bottom: 10px;">
+      <ion-button (click)="payu()" style="margin-bottom: 10px;">
         <ion-icon name="logo-usd"></ion-icon>
 
         Comprar Saldo
       </ion-button>
-     
+
     </ion-buttons>
 
     <ion-buttons slot="end">
-      <ion-button (click)="onClick()" style="margin-bottom: 10px;">
+      <ion-button (click)="menu()" style="margin-bottom: 10px;">
         <ion-icon name="settings-outline"></ion-icon>
-         <p style="padding-left: 10px;">Menu</p>
+        <p style="padding-left: 10px;">Menu</p>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

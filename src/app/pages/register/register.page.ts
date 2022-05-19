@@ -42,7 +42,8 @@ export class RegisterPage implements OnInit {
       ...this.registerForm.value,
       dni: '',
       version: environment.version,
-      status:true
+      status:true,
+      color:''
     };
     if (this.registerForm.value.names) {
       if (this.registerForm.value.email === this.registerForm.value.emailNew) {

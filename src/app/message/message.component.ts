@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Message } from '../services/data.service';
 import { Customer } from '../models/customer';
+import { PlayerLottery } from '../models/playerLottery';
 
 @Component({
   selector: 'app-message',
@@ -8,23 +9,30 @@ import { Customer } from '../models/customer';
   styleUrls: ['./message.component.scss'],
 })
 export class MessageComponent implements OnInit {
-  @Input() player: Customer;
+  @Input() player: PlayerLottery;
   @Input() id: string;
+  @Input() playerCurrent: PlayerLottery;
   @Input() idWin: string;
-  @Output() updatePlayer: EventEmitter<Customer> = new EventEmitter();
+  @Output() updatePlayer: EventEmitter<PlayerLottery> = new EventEmitter();
+  @Output() updatePlayerCustomer: EventEmitter<PlayerLottery> = new EventEmitter();
+  @Output() updateDatabase: EventEmitter<boolean> = new EventEmitter();
 
   // green 
   item={
-    src:'https://firebasestorage.googleapis.com/v0/b/lotterking-a692c.appspot.com/o/botonred.png?alt=media&token=404af3fe-8416-4c74-b7e6-9e60a32afdf8'
+    src:'assets/img/redButton.jpg'
   }
   constructor() { }
 
   ngOnInit() {}
 
-  update(){
-    if(this.player.src===undefined){
-    this.player.src ='https://firebasestorage.googleapis.com/v0/b/lotterking-a692c.appspot.com/o/botongreen.png?alt=media&token=b68dcef0-9027-48db-95b3-bb7e7f2172ad'
-    this.updatePlayer.emit(this.player);
+  update(current:PlayerLottery){
+    if(this.playerCurrent.status && this.playerCurrent.uid === this.player.uid){
+      this.playerCurrent.status=false;
+      this.updatePlayerCustomer.emit(this.player);
+
+    }else if(this.player.src===undefined && !this.playerCurrent.status  && this.playerCurrent.uid !== this.player.uid){
+      this.player.src ='assets/img/greenButton.jpg'
+      this.updatePlayer.emit(this.player);
     }
   }
 

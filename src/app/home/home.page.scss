@@ -1,33 +1,39 @@
 
+#capa1{ position:absolute; z-index:1; background-color:transparent; }
+#capa2{ position:absolute; z-index:0; } 
+
 .acummulated {
   font: normal normal 45px customDigital;
-  margin-top: 7.3rem;
+  margin-top: 121px;
   color: white;
-  margin-left: 0.6em;
   letter-spacing: 9px;
 }
   
   .chronometer-container {
     
     display: flex;
-    grid-gap: 12px;
-    margin-left: 15px;
+    grid-gap: 6px;
+    margin-left: 20px;
     margin-right: 15px;
     grid-template-columns: repeat(4, 1fr);
     background-color: transparent;
     color:white;
-    margin-top: 1.6em;
-    box-shadow: 10px 5px 5px #CCD1D1;
-
+    text-align: center;
+    
     div {
         height: 1.1em;
-        width: 1em;
+        width: 1.3em;
         display: flex;
         justify-content: center;
         align-items: center;
-        font: normal normal 40px customDigital;
+        font: normal normal 38px customDigital;
         border-radius: 100%;
     }
+}
+
+:host ::ng-deep .swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet {
+    margin: 0 4px;
+    background-color: red;
 }
 
 .dot {
@@ -39,6 +45,8 @@
   margin: 0px 0px 0px 10px;
   background: var(--ion-color-primary-tint);
 }
+
+
 
 .dot--right {
   display: block;
@@ -67,5 +75,5 @@
   background-size: contain;
   height: 330px;
   display: grid;
-  margin-top: 60px;
+  
 }

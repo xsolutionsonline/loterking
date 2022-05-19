@@ -76,7 +76,9 @@ ion-footer ion-title {
   display: block;
   object-fit: inherit;
   object-position: inherit;
-  height: 70px;
+  height: 50px;
   width: 70px;
+  filter: brightness(1.1);
+  mix-blend-mode: normal;
 }
 
