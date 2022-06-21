@@ -19,7 +19,7 @@ export class HomePage implements OnInit {
   @ViewChild('slideHome') slider: IonSlides;
   lottery: LotteryDraw;
   lotteries: LotteryDraw[];
-  timeBegan: any = new Date();
+  timeBegan: Date = new Date();
   started: any = null;
   validateH: any = null;
   days = null;
@@ -189,6 +189,9 @@ export class HomePage implements OnInit {
       },
     }
   };
+  
+  gamer: PlayerLottery;
+  message: boolean = true;
 
   constructor(
     private data: DataService,
@@ -211,6 +214,8 @@ export class HomePage implements OnInit {
           .subscribe((data) => {
             this.lotteries = data;
             this.lottery = data[0];
+            this.gamer = this.lottery?.players?.find(data=> data.uid === this.customer.uid);
+
             this.createdCronos();
           });   
         });
@@ -231,20 +236,11 @@ export class HomePage implements OnInit {
             minutes = 60 - new Date().getMinutes();
             seconds = 60 - new Date().getSeconds();
 
-            if(this.hourInput<=0){
-              minutes = this.lottery.date.getMinutes() - new Date().getMinutes();
-            }
-            
             this.minuteInput = minutes;
             this.secondsInput = seconds;
-            this.timeBegan = new Date();
-            this.timeBegan.setHours(this.timeBegan.getHours() + this.hourInput);
-            this.timeBegan.setMinutes(
-              this.timeBegan.getMinutes() + this.minuteInput
-            );
-            this.timeBegan.setSeconds(
-              this.timeBegan.getSeconds() + this.secondsInput
-            );
+            this.timeBegan.setHours(this.hourInput);
+            this.timeBegan.setMinutes(this.minuteInput);
+            this.timeBegan.setSeconds(this.secondsInput);
             this.validateH = setInterval(() => {
               if (this.lottery) {
                 this.clockRunning();
@@ -297,7 +293,7 @@ export class HomePage implements OnInit {
       this.customer.position = this.validatePosition();
       this.customer.positionOne = this.customer.position.split('')[0] + this.customer.position.split('')[1],
       this.customer.positionTwo=this.customer.position.split('')[2] + this.customer.position.split('')[3],
-      this.customer.verificado=false;
+      this.customer.verificado=true;
       this.customer.lastCron='';
       this.customer.points=0;
       this.customer.accountBalance = this.customer.accountBalance - 5000;
@@ -326,10 +322,26 @@ export class HomePage implements OnInit {
   }
 
   playing(){
-      this.router.navigate(['/game/' +
+    let url = '/gameSpecial/'
+    if(new Date().getTime() >= this.lottery.date.getTime() &&
+      new Date().getTime() <= this.lottery.dateEnd.getTime()){
+    if(this.lottery.online){
+      url= '/game/';
+      this.router.navigate([ url +
       this.lottery.id], { replaceUrl: true }); 
+    }else {
+      
+        this.router.navigate([ url +
+          this.lottery.id + '/'+this.gamer.verificado], { replaceUrl: true }); 
+    }
+  }else {
+    this.router.navigate([ url +
+      this.lottery.id + '/'+this.gamer.verificado], { replaceUrl: true }); 
+  }
+     
   }
 
+  
   validatePosition(): string {
     if(this.lottery.positions<10){
       return '000'+this.lottery.positions;
@@ -351,23 +363,45 @@ export class HomePage implements OnInit {
 
 
   clockRunning() {
-    var currentTime: any = new Date();
-    if((this.timeBegan - currentTime)<0){
+    let minutes = 0;
+    let seconds = 0;
+    const fecha1 = moment(new Date(), "YYYY-MM-DD HH:mm:ss");
+    const fecha2 = moment(this.lottery.date, "YYYY-MM-DD HH:mm:ss");
+
+    this.days = fecha2.diff(fecha1, 'd');
+    this.hourInput = fecha2.diff(fecha1, 'h');
+    minutes =fecha2.diff(fecha1, 'm');
+    seconds = 60 - new Date().getSeconds();
+  
+
+    this.minuteInput = minutes;
+    this.secondsInput = seconds;
+    this.timeBegan.setHours(this.hourInput);
+    this.timeBegan.setMinutes(this.minuteInput);
+    this.timeBegan.setSeconds(this.secondsInput);
+
+    var currentTime: Date = new Date();
+    this.message = true;
+    if((this.lottery.date.getTime() - currentTime.getTime())<0){
       this.hourOutput = '00';
       this.minuteOutput = '00';
       this.secondsOutput = '00'; 
+      if((this.lottery.dateEnd.getTime() - currentTime.getTime())<0){
+        this.message = false;       
+      }
       return true;
     }
-    var timeElapsed = new Date(this.timeBegan - currentTime);
-    var hour = timeElapsed.getUTCHours();
-    var min = timeElapsed.getUTCMinutes();
-    var sec = timeElapsed.getUTCSeconds();
-    var ms = timeElapsed.getUTCMilliseconds();
 
+    
+    //var timeElapsed = new Date(this.timeBegan - currentTime);
+    var hour = this.timeBegan.getHours();
+    var min  = this.timeBegan.getMinutes();
+    var sec  = this.timeBegan.getSeconds();
+    
     this.hourOutput = (hour > 9 ? hour : '0' + hour).toString();
     this.minuteOutput = (min > 9 ? min : '0' + min).toString();
     this.secondsOutput = (sec > 9 ? sec : '0' + sec).toString();
-    this.miliSecondsOutput =  ms.toString();
+    this.miliSecondsOutput =  ''+this.timeBegan.getMilliseconds();
     
   }
 

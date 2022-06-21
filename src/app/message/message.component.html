@@ -19,7 +19,7 @@
           </span>
         </ion-col>
         <ion-col style="height: 4.5em; margin: 0px;padding: 0px;border:1px solid gray; display: flex;" size="2.5">
-            <ion-card (click)="update(player)" style="background-color: transparent;">
+            <ion-card (click)="update(player)" style="background-color: transparent;" *ngIf="verificado">
               <img [src]="player.src ? player.src : 'assets/img/redButton.jpg'" class="img">
             </ion-card>                      
         </ion-col>

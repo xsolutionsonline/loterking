@@ -20,7 +20,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
   },
   {
-    path: 'game/:id',
+    path: 'game/:id/:verificado',
     loadChildren: () => import('./pages/game/game.module').then( m => m.GamePageModule)
   },
   {
@@ -30,6 +30,10 @@ const routes: Routes = [
   {
     path: 'game',
     loadChildren: () => import('./pages/game/game.module').then( m => m.GamePageModule)
+  },
+  {
+    path: 'gameSpecial/:id/:verificado',
+    loadChildren: () => import('./pages/gamespecial/gameSpecial.module').then( m => m.GamePageSpecialModule)
   },
 ];
 

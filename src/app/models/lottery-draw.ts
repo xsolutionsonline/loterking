@@ -16,5 +16,6 @@ export interface LotteryDraw {
     positions:number;
     winner:Customer;
     lastTime:string;
+    online?:boolean;
 
 }

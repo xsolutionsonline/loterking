@@ -13,6 +13,7 @@ export class MessageComponent implements OnInit {
   @Input() id: string;
   @Input() playerCurrent: PlayerLottery;
   @Input() idWin: string;
+  @Input() verificado: boolean;
   @Output() updatePlayer: EventEmitter<PlayerLottery> = new EventEmitter();
   @Output() updatePlayerCustomer: EventEmitter<PlayerLottery> = new EventEmitter();
   @Output() updateDatabase: EventEmitter<boolean> = new EventEmitter();
