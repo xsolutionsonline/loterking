@@ -25,7 +25,7 @@ export class GamePageSpecial implements OnInit {
   hourOutput: string = '';
   minuteOutput: string = '';
   secondsOutput: string = '';
-  miliSecondsOutput: string = '';
+  miliSecondsOutput: String = '';
   lottery: LotteryDraw;
   players: PlayerLottery[];
   customer: Customer;
@@ -66,7 +66,7 @@ export class GamePageSpecial implements OnInit {
           const id = this.route.snapshot.paramMap.get('id');
           this.verificado =
             this.route.snapshot.paramMap.get('verificado') === 'true';
-            debugger;
+            
           this.lotteryDrawService.getLotteryDrawById(id).subscribe((data) => {
             this.lottery = data[0];
 
@@ -104,7 +104,7 @@ export class GamePageSpecial implements OnInit {
               }
             } else {
               let url = '/gameSpecial/';
-              if (this.lottery.online) {
+              if (this.lottery?.online) {
                 url = '/game/';
               }
               if (this.router.url === url && this.initView) {
@@ -166,13 +166,11 @@ export class GamePageSpecial implements OnInit {
     this.minutes = this.minutes < 10 ? '0' + this.minutes : this.minutes;
     this.seconds = this.seconds < 10 ? '0' + this.seconds : this.seconds;
 
-    //document.getElementById('days').innerText = this.days;
-    //document.getElementById('hours').innerText = this.hours;
     this.minuteOutput= this.minutes;
     this.secondsOutput = this.seconds;
-    this.miliSecondsOutput = ''+new Date().getMilliseconds();
+    this.miliSecondsOutput = ''+this.difference;
+    this.miliSecondsOutput =this.miliSecondsOutput.substring(this.miliSecondsOutput.length -3, this.miliSecondsOutput.length);
 
-    //setInterval(this.myTimer, 1000);
     }else {
       this.hourOutput = '00';
       this.minuteOutput = '00';
@@ -330,10 +328,13 @@ export class GamePageSpecial implements OnInit {
               const index1 = this.lottery.players.findIndex(
                 (data) => data.uid === this.customer.uid
               );
+
+              this.playersView[index].src=null;
+              this.playersView[index].verificado = false;
+              this.playersView[index].points = this.pointsCustomer;
+              
               this.lottery.players[index1] = this.playersView[index];
-              this.lottery.players[index1].verificado = false;
-              this.lottery.players[index1].points = this.pointsCustomer;
-              this.lottery.players[index1].src =  'assets/img/redButton.jpg';
+              
 
               this.lotteryDrawService.updateLottery(this.lottery).then(() => {
                 this.playersView = null;
@@ -399,9 +400,7 @@ export class GamePageSpecial implements OnInit {
   updatePlayers() {
     if (this.playersView && this.lottery?.players) {
       this.players.map((data) => {
-        const index = this.playersView.findIndex(
-          (odata) => odata.uid === data.uid
-        );
+        const index = this.playersView.findIndex((odata) => odata.uid === data.uid);
         if (index >= 0) {
           if (this.playersView[index].uid !== this.customer.uid) {
             this.playersView[index].points = data.points;

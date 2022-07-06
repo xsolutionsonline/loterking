@@ -79,12 +79,12 @@
 
     <div style="height: 30%;">
       <ion-button (click)="presentAlertConfirm()" expand="block" shape="round" color="success" style="margin: 10px;"
-        *ngIf="!existPlayer">
-        {{existPlayer ? 'Ya estas inscrito':'Jugar'}}
+        *ngIf="!existPlayer && message">
+        Jugar
       </ion-button>
       <ion-button (click)="playing()" expand="block" shape="round" color="success" style="margin: 10px;"
         *ngIf="existPlayer">
-        {{gamer && gamer.verificado ?'Sorteo': 'Ver resultados'}}
+        {{gamer && gamer.verificado ? (message ?'Sorteo':'Finalizado'): 'Ver resultados'}}
       </ion-button>
 
       <ion-grid fixed *ngIf="existPlayer">

@@ -5,7 +5,7 @@ import { LotteryDraw } from '../models/lottery-draw';
 import { CustomerService } from '../services/customer.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Customer } from '../models/customer';
-import { AlertController, IonSlides, LoadingController } from '@ionic/angular';
+import { AlertController, IonSlides, LoadingController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { PlayerLottery } from '../models/playerLottery';
 var moment = require('moment'); // require
@@ -201,6 +201,7 @@ export class HomePage implements OnInit {
     public alertController: AlertController,
     public loadingController: LoadingController,
     private router: Router,
+    private toastController: ToastController,  
   ) {}
 
   ngOnInit() {
@@ -322,6 +323,7 @@ export class HomePage implements OnInit {
   }
 
   playing(){
+    if(this.message){
     let url = '/gameSpecial/'
     if(new Date().getTime() >= this.lottery.date.getTime() &&
       new Date().getTime() <= this.lottery.dateEnd.getTime()){
@@ -338,7 +340,18 @@ export class HomePage implements OnInit {
     this.router.navigate([ url +
       this.lottery.id + '/'+this.gamer.verificado], { replaceUrl: true }); 
   }
+  }else {
+    this.presentToast('el juego ya ha finalizado y no puedes jugar')
+  }
      
+  }
+
+  async presentToast(message) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 3000,
+    });
+    toast.present();
   }
 
   
@@ -381,6 +394,7 @@ export class HomePage implements OnInit {
     this.timeBegan.setSeconds(this.secondsInput);
 
     var currentTime: Date = new Date();
+    debugger;
     this.message = true;
     if((this.lottery.date.getTime() - currentTime.getTime())<0){
       this.hourOutput = '00';
