@@ -368,6 +368,7 @@ export class GamePageSpecial implements OnInit {
         }
         if (!this.playersView &&  this.verificado) {
           this.playersView = this.lottery.players;
+          this.playersView.forEach(data => {if(data.src){data.src=null}});
 
           this.minuteInput = 5;
           this.secondsInput = 0;

@@ -27,12 +27,12 @@ export class MessageComponent implements OnInit {
   ngOnInit() {}
 
   update(current:PlayerLottery){
-    debugger;
+    
     if(this.playerCurrent.status && this.playerCurrent.uid === this.player.uid){
       this.playerCurrent.status=false;
       this.updatePlayerCustomer.emit(this.player);
 
-    }else if(this.player.src===undefined && !this.playerCurrent.status  && this.playerCurrent.uid !== this.player.uid){
+    }else if(!this.player.src && !this.playerCurrent.status  && this.playerCurrent.uid !== this.player.uid){
       this.player.src ='assets/img/greenButton.jpg'
       this.updatePlayer.emit(this.player);
     }

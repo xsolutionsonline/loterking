@@ -394,7 +394,7 @@ export class HomePage implements OnInit {
     this.timeBegan.setSeconds(this.secondsInput);
 
     var currentTime: Date = new Date();
-    debugger;
+    
     this.message = true;
     if((this.lottery.date.getTime() - currentTime.getTime())<0){
       this.hourOutput = '00';
@@ -430,6 +430,9 @@ export class HomePage implements OnInit {
   }
 
   payu(){
+    let url = '/payulist/'+this.customer.uid
+    this.router.navigate([ url +
+      this.lottery.id], { replaceUrl: true });
 
   }
 

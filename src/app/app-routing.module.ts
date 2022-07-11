@@ -35,6 +35,10 @@ const routes: Routes = [
     path: 'gameSpecial/:id/:verificado',
     loadChildren: () => import('./pages/gamespecial/gameSpecial.module').then( m => m.GamePageSpecialModule)
   },
+  {
+    path: 'payulist/:id',
+    loadChildren: () => import('./pages/payulist/payulist.module').then( m => m.PayulistPageModule)
+  },
 ];
 
 @NgModule({
