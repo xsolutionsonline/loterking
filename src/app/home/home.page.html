@@ -29,6 +29,7 @@
           margin-bottom: 340px;
           margin-top: 10px;
           padding-left: 10px;">{{lottery.title}} -v46</h1>
+          
           <div id="capa1">
 
             <ion-grid fixed>
@@ -58,11 +59,12 @@
                     <div class="hour-container" style="font-size: 20px;width: 60px;
                    font-family: Verdana, Geneva, Tahoma, sans-serif;margin-top: 5px;margin-bottom: 28px;">
                       <h2>{{message ? 'JUGANDO' : 'FINALIZADO'}}....</h2>
+                     
                     </div>
                   </div>
                 </ion-col>
               </ion-row>
-
+              
             </ion-grid>
 
 
@@ -72,7 +74,7 @@
 
 
           <div id="capa2"> <img src="../assets/img/fondo.png" /> </div>
-        </ion-slide>
+        </ion-slide>       
       </ion-slides>
 
     </div>
@@ -93,7 +95,9 @@
           <ion-col size="6">
             <p style="font-weight: bold;text-align: center;">Su Número es</p>
           </ion-col>
-          <ion-col size="3"></ion-col>
+          <ion-col size="3">
+            ver premios 
+          </ion-col>
         </ion-row>
         <ion-row style="margin: 0px;padding: 0px;">
           <ion-col size="3"></ion-col>
@@ -107,7 +111,12 @@
               </div>
             </div>
           </ion-col>
-          <ion-col size="3"></ion-col>
+          <ion-col size="3" style="margin-top: 15px;">
+            <ion-button (click)="viewAwards()">
+              <ion-icon slot="icon-only" name="cash-outline"></ion-icon>
+              
+            </ion-button>
+          </ion-col>
           <ion-col size="3">
 
           </ion-col>

@@ -69,6 +69,7 @@
   <ion-list style="padding: 0px ;" *ngIf="lottery">
     <app-message *ngFor="let player of playersView" [player]="player" [playerCurrent]="customer" [id]="customer.uid"
       [idWin]="winner" (updatePlayer)="updatePlayer($event)" (updatePlayerCustomer)="updatePlayerCustomer($event)"
-      [verificado]="verificado"
+      [verificado]="verificado" [minuteOutput]="minuteOutput" [secondsOutput]="secondsOutput" [miliSecondsOutput]="miliSecondsOutput"
      ></app-message>
   </ion-list>
+  <!-- -->

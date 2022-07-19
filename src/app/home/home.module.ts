@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
 import { MessageComponentModule } from '../message/message.module';
+import { ViewAwardsModule } from '../view-awards/viewAwards.module';
+import { MenuPrincipalModule } from '../menu-principal/menuPrincipal.module';
 
 @NgModule({
   imports: [
@@ -13,7 +15,9 @@ import { MessageComponentModule } from '../message/message.module';
     FormsModule,
     IonicModule,
     MessageComponentModule,
-    HomePageRoutingModule
+    HomePageRoutingModule,
+    ViewAwardsModule,
+    MenuPrincipalModule,
   ],
   declarations: [HomePage]
 })

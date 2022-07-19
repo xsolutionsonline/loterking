@@ -69,7 +69,7 @@ export class GamePageSpecial implements OnInit {
             
           this.lotteryDrawService.getLotteryDrawById(id).subscribe((data) => {
             this.lottery = data[0];
-
+              debugger;
             if (
               new Date().getTime() >= this.lottery.date.getTime() &&
               new Date().getTime() <= this.lottery.dateEnd.getTime() &&
@@ -469,7 +469,11 @@ export class GamePageSpecial implements OnInit {
       this.secondsOutput +
       ':' +
       this.miliSecondsOutput;
-
+      if(!playerU.historyCron){
+        playerU.historyCron = [];
+      }
+  
+      playerU.historyCron.push(playerU.lastCron);  
     this.lotteryDrawService.updatePLayerLottery(playerU);
 
     if (index >= 0) {

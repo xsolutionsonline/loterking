@@ -6,9 +6,10 @@ import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { MessageComponent } from './message.component';
+import { ViewHistoryModule } from '../view-history-cron/viewHistory.module';
 
 @NgModule({
-  imports: [ CommonModule, FormsModule, IonicModule, RouterModule],
+  imports: [ CommonModule, FormsModule, IonicModule, RouterModule,ViewHistoryModule],
   declarations: [MessageComponent],
   exports: [MessageComponent]
 })

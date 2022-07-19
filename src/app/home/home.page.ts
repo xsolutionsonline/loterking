@@ -5,9 +5,11 @@ import { LotteryDraw } from '../models/lottery-draw';
 import { CustomerService } from '../services/customer.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Customer } from '../models/customer';
-import { AlertController, IonSlides, LoadingController, ToastController } from '@ionic/angular';
+import { AlertController, IonSlides, LoadingController, ToastController, ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { PlayerLottery } from '../models/playerLottery';
+import { ViewAwardsComponent } from '../view-awards/view-awards.component';
+import { MenuPrincipalComponent } from '../menu-principal/menu-principal.component';
 var moment = require('moment'); // require
 
 @Component({
@@ -202,6 +204,7 @@ export class HomePage implements OnInit {
     public loadingController: LoadingController,
     private router: Router,
     private toastController: ToastController,  
+    private modalCtrl: ModalController
   ) {}
 
   ngOnInit() {
@@ -215,6 +218,7 @@ export class HomePage implements OnInit {
           .subscribe((data) => {
             this.lotteries = data;
             this.lottery = data[0];
+            console.log('winner',this.lottery.percentWiners);
             this.gamer = this.lottery?.players?.find(data=> data.uid === this.customer.uid);
 
             this.createdCronos();
@@ -323,10 +327,14 @@ export class HomePage implements OnInit {
   }
 
   playing(){
-    if(this.message){
+    
     let url = '/gameSpecial/'
     if(new Date().getTime() >= this.lottery.date.getTime() &&
       new Date().getTime() <= this.lottery.dateEnd.getTime()){
+        if(!this.message){
+          this.presentToast('el juego ya ha finalizado y no puedes jugar');
+          return true;
+        }
     if(this.lottery.online){
       url= '/game/';
       this.router.navigate([ url +
@@ -340,9 +348,7 @@ export class HomePage implements OnInit {
     this.router.navigate([ url +
       this.lottery.id + '/'+this.gamer.verificado], { replaceUrl: true }); 
   }
-  }else {
-    this.presentToast('el juego ya ha finalizado y no puedes jugar')
-  }
+  
      
   }
 
@@ -372,6 +378,16 @@ export class HomePage implements OnInit {
       this.lottery = this.lotteries[index];
       this.createdCronos();
    });    
+  }
+
+  async viewAwards(){
+    
+    const modal = await this.modalCtrl.create({
+      component: ViewAwardsComponent,
+      cssClass: 'modal-fullscreen',
+      componentProps: { awards: this.lottery.percentWiners , valueAward:this.lottery.winningPot},
+    });
+    await modal.present();
   }
 
 
@@ -436,7 +452,12 @@ export class HomePage implements OnInit {
 
   }
 
-  menu(){
-    
+  async menu(){
+    const modal = await this.modalCtrl.create({
+      component: MenuPrincipalComponent,
+      cssClass: 'modal-fullscreen',
+      componentProps: { chronos: ''},
+    });
+    await modal.present();
   }
 }
