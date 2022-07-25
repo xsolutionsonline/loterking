@@ -18,6 +18,7 @@ export interface PlayerLottery {
     positionTwo?:string;
     id?: string;
     uid?: string;
+    winSecond?:boolean;
     color?:string;
     verificado?: boolean;
     status: boolean;

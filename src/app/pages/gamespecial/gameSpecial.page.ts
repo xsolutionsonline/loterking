@@ -3,7 +3,7 @@ import { LotteryDraw } from '../../models/lottery-draw';
 import { LotteryDrawService } from '../../services/lottery-draw.service';
 import { CustomerService } from '../../services/customer.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Customer } from '../../models/customer';
 import { PlayerLottery } from '../../models/playerLottery';
@@ -48,85 +48,97 @@ export class GamePageSpecial implements OnInit {
   pointsCustomer: number;
   verificado: boolean;
   gameFirst: boolean = true;
-
+  loading: HTMLIonLoadingElement;
+  
   constructor(
     private lotteryDrawService: LotteryDrawService,
     private customerService: CustomerService,
     private Oauth: AngularFireAuth,
     public alertController: AlertController,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public loadingController: LoadingController,
   ) {}
 
-  ngOnInit() {
-    this.Oauth.authState.subscribe((user: any) => {
-      if (user) {
-        this.customerService.getCustomerData(user.uid).subscribe((data) => {
-          this.customer = data[0];
-          const id = this.route.snapshot.paramMap.get('id');
-          this.verificado =
-            this.route.snapshot.paramMap.get('verificado') === 'true';
-            
-          this.lotteryDrawService.getLotteryDrawById(id).subscribe((data) => {
-            this.lottery = data[0];
-
-            if (
-              new Date().getTime() >= this.lottery.date.getTime() &&
-              new Date().getTime() <= this.lottery.dateEnd.getTime() &&
-              this.lottery.date.getMinutes() + 5 < new Date().getTime()
-            ) {
-              if (this.lottery?.players?.length < 1000) {
-                this.createdRobots();
-              }
-
-              this.beginGame();
-            } else {
-              if(new Date().getTime() < this.lottery.date.getTime()){
-                this.createdCronos();
-                this.presentAlertConfirmJ();  
+ async  ngOnInit() {
+    this.loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Un momento por favor...',
+      spinner: 'lines-sharp-small',
+    });
+    await this.loading.present().then(() => {
+      this.Oauth.authState.subscribe((user: any) => {
+        if (user) {
+          this.customerService.getCustomerData(user.uid).subscribe((data) => {
+            this.customer = data[0];
+            const id = this.route.snapshot.paramMap.get('id');
+            this.verificado =
+              this.route.snapshot.paramMap.get('verificado') === 'true';              
+            this.lotteryDrawService.getLotteryDrawById(id).subscribe((data) => {
+              this.lottery = data[0];
+  
+              if (
+                new Date().getTime() >= this.lottery.date.getTime() &&
+                new Date().getTime() <= this.lottery.dateEnd.getTime() &&
+                this.lottery.date.getMinutes() + 5 < new Date().getTime()
+              ) {
+                if (this.lottery?.players?.length < 1000) {
+                  this.createdRobots();
+                }
+  
+                this.beginGame();
+              } else {
+                if(new Date().getTime() < this.lottery.date.getTime()){
+                  this.createdCronos();
+                  this.presentAlertConfirmJ();  
+                }
+                
               }
               
-            }
+            });
+            this.started = setInterval(() => {
+              if (
+                new Date().getTime() >= this.lottery?.date.getTime() &&
+                !this.startGame
+              ) {
+                if (this.lottery?.players?.length < 1000) {
+                  this.createdRobots();
+                }
+  
+                this.beginGame();
+                if (this.viewAlert) {
+                  this.viewAlert = false;
+                  this.alertController?.dismiss();
+                }
+              } else {
+                let url = '/gameSpecial/';
+                if (this.lottery?.online) {
+                  url = '/game/';
+                }
+                if (this.router.url === url && this.initView) {
+                  this.presentAlertConfirmJ();
+                }
+              }
+            }, 50);
           });
-          this.started = setInterval(() => {
-            if (
-              new Date().getTime() >= this.lottery?.date.getTime() &&
-              !this.startGame
-            ) {
-              if (this.lottery?.players?.length < 1000) {
-                this.createdRobots();
+          if (!this.started1) {
+            this.started1 = setInterval(() => {
+              if (this.lottery && this.startGame) {
+                //this.clockRunning();
+                if (this.viewAlert) {
+                  this.viewAlert = false;
+                  this.alertController?.dismiss();
+                }
               }
-
-              this.beginGame();
-              if (this.viewAlert) {
-                this.viewAlert = false;
-                this.alertController?.dismiss();
-              }
-            } else {
-              let url = '/gameSpecial/';
-              if (this.lottery?.online) {
-                url = '/game/';
-              }
-              if (this.router.url === url && this.initView) {
-                this.presentAlertConfirmJ();
-              }
-            }
-          }, 50);
-        });
-        if (!this.started1) {
-          this.started1 = setInterval(() => {
-            if (this.lottery && this.startGame) {
-              //this.clockRunning();
-              if (this.viewAlert) {
-                this.viewAlert = false;
-                this.alertController?.dismiss();
-              }
-            }
-          }, 10);
+            }, 10);
+          }
         }
-      }
+      });
     });
+    
   }
+
+  
 
   currentDate: any;
   targetDate: any;
@@ -309,50 +321,78 @@ export class GamePageSpecial implements OnInit {
 
   async presentAlertConfirm() {
     if (!this.finishedGame) {
+      const index = this.playersView.findIndex(
+        (data) => data.uid === this.customer.uid
+      );
+      const index1 = this.lottery.players.findIndex(
+        (data) => data.uid === this.customer.uid
+      );
       this.finishedGame = true;
+      this.playersView[index].src=null;
+      this.playersView[index].verificado = false;
+      this.playersView[index].points = this.pointsCustomer;
+      
+      this.lottery.players[index1] = this.playersView[index];
+      
 
-      const alert = await this.alertController.create({
-        cssClass: 'my-custom-class',
-        header: 'el juego HA FINALIZADO ',
-        message: ` SU PUNTUACION ES:<strong>${this.pointsCustomer}</strong>, EL GANADOR SERÁ PUBLICADO AL FINALIZAR EL SORTEO`,
-        buttons: [
-          {
-            text: 'Salir',
-            role: 'cancel',
-            cssClass: 'primary',
-            id: 'cancel-button',
-            handler: (blah) => {
-              const index = this.playersView.findIndex(
-                (data) => data.uid === this.customer.uid
-              );
-              const index1 = this.lottery.players.findIndex(
-                (data) => data.uid === this.customer.uid
-              );
-
-              this.playersView[index].src=null;
-              this.playersView[index].verificado = false;
-              this.playersView[index].points = this.pointsCustomer;
-              
-              this.lottery.players[index1] = this.playersView[index];
-              
-
-              this.lotteryDrawService.updateLottery(this.lottery).then(() => {
-                this.playersView = null;
-                this.startGame = false;
+      this.lotteryDrawService.updateLottery(this.lottery).then(async () => {
+        this.playersView = null;
+        this.startGame = false;
+        const alert = await this.alertController.create({
+          cssClass: 'my-custom-class',
+          header: 'el juego HA FINALIZADO ',
+          message: ` SU PUNTUACION ES:<strong>${this.pointsCustomer}</strong>, EL GANADOR SERÁ PUBLICADO AL FINALIZAR EL SORTEO`,
+          buttons: [
+            {
+              text: 'Salir',
+              role: 'cancel',
+              cssClass: 'primary',
+              id: 'cancel-button',
+              handler: (blah) => {
+               
                 this.router.navigate(['/home']);
-              });
+               
+              },
             },
-          },
-        ],
+          ],
+        });
+  
+        await alert.present();
+        
       });
-
-      await alert.present();
+     
     }
   }
 
   back(){
     this.router.navigate(['/home']);
   }
+
+  async ngOnDestroy() {
+    //jerry borrra
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'el juego HA FINALIZADO ',
+      message: ` ya no podras ingresar mas `,
+      buttons: [
+        {
+          text: 'Salir',
+          role: 'cancel',
+          cssClass: 'primary',
+          id: 'cancel-button',
+          handler: (blah) => {
+           
+
+           
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+}
+
+  
 
   beginGame() {
     
@@ -381,8 +421,9 @@ export class GamePageSpecial implements OnInit {
             this.timeBegan.getSeconds() + this.secondsInput
           );
           this.startGame = true;
-
+          
         }
+        this.loading.dismiss();
       });
     
   }
@@ -401,6 +442,7 @@ export class GamePageSpecial implements OnInit {
   updatePlayers() {
     if (this.playersView && this.lottery?.players) {
       this.players.map((data) => {
+        
         const index = this.playersView.findIndex((odata) => odata.uid === data.uid);
         if (index >= 0) {
           if (this.playersView[index].uid !== this.customer.uid) {
@@ -423,14 +465,19 @@ export class GamePageSpecial implements OnInit {
 
         return 0;
       });
-      if(this.gameFirst){
-        this.gameFirst = false;
-        const custGame = this.playersView.find(data => data.uid === this.customer.uid);
-        this.playersView = this.playersView.filter(odata => this.customer.uid !== odata.uid);
-        this.playersView.unshift(custGame);
-      }
+      const custGame = this.playersView.find(data => data.uid === this.customer.uid);
+      const indexC = this.playersView.findIndex(data => data.uid === this.customer.uid);
       
-
+      if(indexC >1){
+        this.playersView = this.playersView.filter(odata => this.customer.uid !== odata.uid);
+        custGame.winSecond=true;
+        if(indexC>3){
+          custGame.winSecond=false;
+        }
+       
+        this.playersView.splice(1,0,custGame);
+      }
+     
       this.winner = this.playersView[0].uid;
       this.playersView[1].color = 'blue';
       this.playersView[2].color = 'blue';

@@ -11,6 +11,7 @@ import { PlayerLottery } from '../models/playerLottery';
 export class MessageComponent implements OnInit {
   @Input() player: PlayerLottery;
   @Input() id: string;
+  @Input() index: number;
   @Input() playerCurrent: PlayerLottery;
   @Input() idWin: string;
   @Input() verificado: boolean;

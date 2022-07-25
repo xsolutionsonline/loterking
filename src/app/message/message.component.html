@@ -1,6 +1,6 @@
 
     <ion-grid style="padding: 0px;">
-      <ion-row [ngStyle]="{'background-color':player?.uid === idWin ? 'red':player?.color === 'blue' ?  player?.uid === id ?  '#AAB7B8':'#99F0FF':player?.uid === id ?  '#AAB7B8': ''}" style="margin: 0px;padding: 0px;height: 4.5em;">
+      <ion-row [ngStyle]="{'background-color':player?.uid === idWin ? 'red':player?.color === 'blue' ?  player?.uid === id  && !player?.winSecond ?  '#AAB7B8':index<4?'#99F0FF':white:player?.uid === id ?  '#AAB7B8': ''}" style="margin: 0px;padding: 0px;height: 4.5em;">
         <ion-col style="height: 4.5em; margin: 0px;padding: 0px;border:1px solid gray"  size="3">
           <div style="display: flex;margin-top: 16px;">
             <div slot="start" class="dot"><p style="color: white;text-align: center;margin: 10px;">{{player?.positionOne}}</p></div>
@@ -17,6 +17,7 @@
             <p style="text-align: center;margin: 10px 0px 0px 0px;font-size: 18px;font-weight: bold;">{{player?.points}}</p>
           </div>
           </span>
+          
         </ion-col>
         <ion-col style="height: 4.5em; margin: 0px;padding: 0px;border:1px solid gray; display: flex;" size="2.5">
             <ion-card (click)="update(player)" style="background-color: transparent;" *ngIf="verificado">

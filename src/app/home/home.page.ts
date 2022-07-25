@@ -204,24 +204,33 @@ export class HomePage implements OnInit {
     private toastController: ToastController,  
   ) {}
 
-  ngOnInit() {
-    this.Oauth.authState.subscribe((user: any) => {
-      if (user) {
-        this.customerService.getCustomerData(user.uid).subscribe((data) => {
-          this.customer = data[0];
-        
-          this.lotteryDrawService
-          .getLotteryDrawById('JfWIRLA0R1qKqGnLJOxG')
-          .subscribe((data) => {
-            this.lotteries = data;
-            this.lottery = data[0];
-            this.gamer = this.lottery?.players?.find(data=> data.uid === this.customer.uid);
-
-            this.createdCronos();
-          });   
-        });
-      }
+  async ngOnInit() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Un momento por favor...',
+      spinner: 'lines-sharp-small',
     });
+    await loading.present().then(() => {
+      this.Oauth.authState.subscribe((user: any) => {
+        if (user) {
+          this.customerService.getCustomerData(user.uid).subscribe((data) => {
+            this.customer = data[0];
+          
+            this.lotteryDrawService
+            .getLotteryDrawById('JfWIRLA0R1qKqGnLJOxG')
+            .subscribe((data) => {
+              this.lotteries = data;
+              this.lottery = data[0];
+              this.gamer = this.lottery?.players?.find(data=> data.uid === this.customer.uid);
+  
+              this.createdCronos();
+              loading.dismiss();
+            });   
+          });
+        }
+      });
+    });
+    
    
   }
   createdCronos() {

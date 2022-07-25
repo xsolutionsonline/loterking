@@ -67,8 +67,8 @@
   </ion-grid>
 
   <ion-list style="padding: 0px ;" *ngIf="lottery">
-    <app-message *ngFor="let player of playersView" [player]="player" [playerCurrent]="customer" [id]="customer.uid"
-      [idWin]="winner" (updatePlayer)="updatePlayer($event)" (updatePlayerCustomer)="updatePlayerCustomer($event)"
+    <app-message *ngFor="let player of playersView;let i = index" [player]="player" [playerCurrent]="customer" [id]="customer.uid"
+      [idWin]="winner" (updatePlayer)="updatePlayer($event)" (updatePlayerCustomer)="updatePlayerCustomer($event)" [index]="i"
       [verificado]="verificado"
      ></app-message>
   </ion-list>

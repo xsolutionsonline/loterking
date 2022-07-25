@@ -84,7 +84,7 @@
       </ion-button>
       <ion-button (click)="playing()" expand="block" shape="round" color="success" style="margin: 10px;"
         *ngIf="existPlayer">
-        {{gamer && gamer.verificado ? (message ?'Sorteo':'Finalizado'): 'Ver resultados'}}
+        {{gamer && gamer.verificado ? (message ?'Sorteo':'Finalizado'): message ?'Ver resultados':'Finalizado'}}
       </ion-button>
 
       <ion-grid fixed *ngIf="existPlayer">
