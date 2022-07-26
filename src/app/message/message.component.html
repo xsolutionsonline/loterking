@@ -1,6 +1,6 @@
 
     <ion-grid style="padding: 0px;">
-      <ion-row [ngStyle]="{'background-color':player?.uid === idWin ? 'red':player?.color === 'blue' ?  player?.uid === id  && !player?.winSecond ?  '#AAB7B8':index<4?'#99F0FF':white:player?.uid === id ?  '#AAB7B8': ''}" style="margin: 0px;padding: 0px;height: 4.5em;">
+      <ion-row [ngStyle]="{'background-color':player?.uid === idWin ? 'red':player?.color === 'blue' ?  player?.uid === id  && !player?.winSecond ?  '#AAB7B8':index<4?'#99F0FF':'white':player?.uid === id ?  '#AAB7B8': ''}" style="margin: 0px;padding: 0px;height: 4.5em;">
         <ion-col style="height: 4.5em; margin: 0px;padding: 0px;border:1px solid gray"  size="3">
           <div style="display: flex;margin-top: 16px;">
             <div slot="start" class="dot"><p style="color: white;text-align: center;margin: 10px;">{{player?.positionOne}}</p></div>

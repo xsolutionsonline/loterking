@@ -368,32 +368,6 @@ export class GamePageSpecial implements OnInit {
     this.router.navigate(['/home']);
   }
 
-  async ngOnDestroy() {
-    //jerry borrra
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'el juego HA FINALIZADO ',
-      message: ` ya no podras ingresar mas `,
-      buttons: [
-        {
-          text: 'Salir',
-          role: 'cancel',
-          cssClass: 'primary',
-          id: 'cancel-button',
-          handler: (blah) => {
-           
-
-           
-          },
-        },
-      ],
-    });
-
-    await alert.present();
-}
-
-  
-
   beginGame() {
     
       this.lotteryDrawService.getPlayerLottery().subscribe((data) => {
@@ -408,7 +382,16 @@ export class GamePageSpecial implements OnInit {
         }
         if (!this.playersView &&  this.verificado) {
           this.playersView = this.lottery.players;
-          this.playersView.forEach(data => {if(data.src){data.src=null}});
+          this.playersView.forEach(data => {
+            if(data.uid === this.player.uid){
+              data.points=0;
+            }
+
+            if(data.src){
+                
+               data.src=null
+            }
+        });
 
           this.minuteInput = 5;
           this.secondsInput = 0;
@@ -469,12 +452,11 @@ export class GamePageSpecial implements OnInit {
       const indexC = this.playersView.findIndex(data => data.uid === this.customer.uid);
       
       if(indexC >1){
-        this.playersView = this.playersView.filter(odata => this.customer.uid !== odata.uid);
         custGame.winSecond=true;
         if(indexC>3){
           custGame.winSecond=false;
         }
-       
+        this.playersView = this.playersView.filter(odata => this.customer.uid !== odata.uid);
         this.playersView.splice(1,0,custGame);
       }
      
