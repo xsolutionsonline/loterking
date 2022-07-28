@@ -29,6 +29,8 @@
     "@ionic/cordova-builders": "^6.1.0",
     "cordova-android": "8.1.0",
     "firebase": "^9.6.9",
+    "ionic-native": "^2.9.0",
+    "@ionic-native/in-app-browser": "^5.31.1",
     "moment": "^2.29.3",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
