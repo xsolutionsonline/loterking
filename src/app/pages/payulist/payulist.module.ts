@@ -15,9 +15,6 @@ import { PayulistPage } from './payulist.page';
     IonicModule,
     PayulistPageRoutingModule
   ],
-  providers:[
-    InAppBrowser,
-  ],
   declarations: [PayulistPage]
 })
 export class PayulistPageModule {}

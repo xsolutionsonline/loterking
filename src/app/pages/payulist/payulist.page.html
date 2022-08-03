@@ -14,30 +14,106 @@
 </ion-header>
 
 <ion-content>
+  <div>
+    <ion-button  (click)="payu(15000,'https://mpago.li/1F2BDYF')" expand="block" fill="clear" shape="round">
+      <strong style="text-decoration:underline "> Recarga de $15.000</strong>
+    </ion-button>
+  </div>
   <ion-list>
-    <ion-item (click)="payu(15000,'https://mpago.li/1F2BDYF')">
-      <ion-label><strong style="text-decoration:underline "> Recarga de $15.000</strong> </ion-label>
-      <img
-        src="https://firebasestorage.googleapis.com/v0/b/lotterking-a692c.appspot.com/o/mercadopago.png?alt=media&token=ee5ff78d-b1d2-402d-971a-bbf01f192977"
-        style="max-width: 17%;border: 0;padding-top: 2px;">
-    </ion-item>
-    <ion-item (click)="payu(30000,'https://mpago.li/1PenftZ')">
-      <ion-label><strong style="text-decoration:underline ">Recarga de $30.000</strong></ion-label>
-      <img
-        src="https://firebasestorage.googleapis.com/v0/b/lotterking-a692c.appspot.com/o/mercadopago.png?alt=media&token=ee5ff78d-b1d2-402d-971a-bbf01f192977"
-        style="max-width: 17%;border: 0;padding-top: 2px;">
-    </ion-item>
-    <ion-item (click)="payu(50000,'https://mpago.li/2ZB36qs')">
-      <ion-label><strong style="text-decoration:underline ">Recarga de $50.000</strong></ion-label>
-      <img
-        src="https://firebasestorage.googleapis.com/v0/b/lotterking-a692c.appspot.com/o/mercadopago.png?alt=media&token=ee5ff78d-b1d2-402d-971a-bbf01f192977"
-        style="max-width: 17%;border: 0;padding-top: 2px;">
-    </ion-item>
-    <ion-item (click)="payu(100000,'https://mpago.li/2aKMnHd')">
-      <ion-label><strong style="text-decoration:underline ">Recarga de $100.000</strong></ion-label>
-      <img
-        src="https://firebasestorage.googleapis.com/v0/b/lotterking-a692c.appspot.com/o/mercadopago.png?alt=media&token=ee5ff78d-b1d2-402d-971a-bbf01f192977"
-        style="max-width: 17%;border: 0;padding-top: 2px;">
-    </ion-item>
+    
+    <ion-card>
+      <ion-card-content >
+        <ion-item >
+          <ion-grid fixed>
+            <ion-row>
+              <ion-col size="10">
+               
+
+              </ion-col>
+              <ion-col size="2">
+                <img
+                src="https://firebasestorage.googleapis.com/v0/b/lotterking-a692c.appspot.com/o/mercadopago.png?alt=media&token=ee5ff78d-b1d2-402d-971a-bbf01f192977">
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          
+         
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-content >
+        <ion-item >
+          <ion-grid fixed>
+            <ion-row>
+              <ion-col size="10">
+                <ion-button (click)="payu(30000,'https://mpago.li/1PenftZ')" expand="block" fill="clear" shape="round">
+                  <strong style="text-decoration:underline "> Recarga de $30.000</strong>
+                </ion-button>
+
+              </ion-col>
+              <ion-col size="2">
+                <img
+                src="https://firebasestorage.googleapis.com/v0/b/lotterking-a692c.appspot.com/o/mercadopago.png?alt=media&token=ee5ff78d-b1d2-402d-971a-bbf01f192977">
+              </ion-col>
+            </ion-row>
+          </ion-grid>          
+        </ion-item>
+        
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+          <ion-grid fixed>
+            <ion-row>
+              <ion-col size="10">
+                <ion-button (click)="payu(50000,'https://mpago.li/2ZB36qs')" expand="block" fill="clear" shape="round">
+                  <strong style="text-decoration:underline "> Recarga de $50.000</strong>
+                </ion-button>
+
+              </ion-col>
+              <ion-col size="2">
+                <img
+                src="https://firebasestorage.googleapis.com/v0/b/lotterking-a692c.appspot.com/o/mercadopago.png?alt=media&token=ee5ff78d-b1d2-402d-971a-bbf01f192977">
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+      
+        </ion-item>
+        
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+          <ion-grid fixed>
+            <ion-row>
+              <ion-col size="10">
+                <ion-button (click)="payu(100000,'https://mpago.li/2aKMnHd')" expand="block" fill="clear" shape="round">
+                  <strong style="text-decoration:underline "> Recarga de $100.000</strong>
+                </ion-button>
+
+              </ion-col>
+              <ion-col size="2">
+                <img
+                src="https://firebasestorage.googleapis.com/v0/b/lotterking-a692c.appspot.com/o/mercadopago.png?alt=media&token=ee5ff78d-b1d2-402d-971a-bbf01f192977">
+              </ion-col>
+            </ion-row>
+          </ion-grid>         
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-content (click)="payu(15000,'https://mpago.li/1F2BDYF')">
+       
+      </ion-card-content>
+    </ion-card>
+    
+   
   </ion-list>
 </ion-content>

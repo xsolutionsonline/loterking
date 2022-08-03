@@ -20,21 +20,18 @@ export class PayulistPage implements OnInit {
 
  
 
-  payu(value,link) {
+  payu(value,url) {
+    
     const options: InAppBrowserOptions = {
       location: 'yes',
       zoom: 'yes',
       toolbar: 'no',
       closebuttoncaption: 'back',
     };
-    const browser: any = this.iab.create(
-      link,
-      '_system'
-    );
+    const browser: any = this.iab.create(url);
+    browser.close();
 
-    browser.on('loadstop').subscribe((event) => {
-      browser.insertCSS({ code: 'body{color: red;' });
-    });
+    
   }
 
   back(){
