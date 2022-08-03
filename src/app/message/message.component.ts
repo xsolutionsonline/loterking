@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Message } from '../services/data.service';
-import { Customer } from '../models/customer';
 import { PlayerLottery } from '../models/playerLottery';
+import { ModalController } from '@ionic/angular';
+import { ViewHistoryCronComponent } from '../view-history-cron/view-history-cron.component';
 
 @Component({
   selector: 'app-message',
@@ -15,6 +15,9 @@ export class MessageComponent implements OnInit {
   @Input() playerCurrent: PlayerLottery;
   @Input() idWin: string;
   @Input() verificado: boolean;
+  @Input() minuteOutput: string = '00';
+  @Input() secondsOutput: string = '00';
+  @Input() miliSecondsOutput: string= '00';
   @Output() updatePlayer: EventEmitter<PlayerLottery> = new EventEmitter();
   @Output() updatePlayerCustomer: EventEmitter<PlayerLottery> = new EventEmitter();
   @Output() updateDatabase: EventEmitter<boolean> = new EventEmitter();
@@ -23,9 +26,13 @@ export class MessageComponent implements OnInit {
   item={
     src:'assets/img/redButton.jpg'
   }
-  constructor() { }
+  constructor(private modalCtrl: ModalController) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.minuteOutput = '00';
+    this.secondsOutput ='00';
+    this.miliSecondsOutput='00';
+  }
 
   update(current:PlayerLottery){
     
@@ -38,6 +45,17 @@ export class MessageComponent implements OnInit {
       this.updatePlayer.emit(this.player);
     }
   }
+
+  async viewHistory(current:PlayerLottery){
+    const modal = await this.modalCtrl.create({
+      component: ViewHistoryCronComponent,
+      cssClass: 'modal-fullscreen',
+      componentProps: { chronos: current.historyCron},
+    });
+    await modal.present();
+  }
+
+  
 
   isIos() {
     const win = window as any;

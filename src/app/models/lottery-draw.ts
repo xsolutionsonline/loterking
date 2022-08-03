@@ -13,6 +13,7 @@ export interface LotteryDraw {
     title:string;
     dateEnd:any;
     players?:PlayerLottery[];
+    percentWiners?:Number[];
     positions:number;
     winner:Customer;
     lastTime:string;

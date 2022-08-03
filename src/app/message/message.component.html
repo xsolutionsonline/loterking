@@ -15,6 +15,11 @@
             <div style="display: grid;">
             <ion-note style="background-color: black; color: white;text-align: center;">{{ player?.lastCron }}</ion-note>
             <p style="text-align: center;margin: 10px 0px 0px 0px;font-size: 18px;font-weight: bold;">{{player?.points}}</p>
+            <div class="chronometer-container" *ngIf=" player?.uid === id" style="margin-top: 5px">
+              <div class="minute-container" style="margin-left: 10px;">{{minuteOutput}}:</div>
+              <div class="second-container">{{secondsOutput}}:</div>
+              <div class="milisecond-container">{{miliSecondsOutput}}</div>
+            </div>
           </div>
           </span>
           
@@ -22,7 +27,10 @@
         <ion-col style="height: 4.5em; margin: 0px;padding: 0px;border:1px solid gray; display: flex;" size="2.5">
             <ion-card (click)="update(player)" style="background-color: transparent;" *ngIf="verificado">
               <img [src]="player.src ? player.src : 'assets/img/redButton.jpg'" class="img">
-            </ion-card>                      
+            </ion-card>   
+            <ion-card (click)="viewHistory(player)" style="background-color: transparent;" *ngIf="!verificado">
+              <img src="assets/icon/history.png" class="img">
+            </ion-card>                   
         </ion-col>
       </ion-row>
     </ion-grid>

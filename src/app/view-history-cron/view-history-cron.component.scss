@@ -1,0 +1,16 @@
+.chronometer-container {
+    grid-template-columns: repeat(4, 1fr);
+    background-color: black;
+    background-repeat:no-repeat;
+    background-size: contain;
+    color:white;
+    div {
+        height: 1em;
+        width: 7px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font: normal normal 15px customDigital;
+        border-radius: 100%;
+    }
+  }

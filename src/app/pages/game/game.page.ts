@@ -407,6 +407,11 @@ export class GamePage implements OnInit {
         this.secondsOutput +
         ':' +
         this.miliSecondsOutput;
+    if(!playerU.historyCron){
+      playerU.historyCron = [];
+    }
+
+    playerU.historyCron.push(playerU.lastCron);
         
         this.lotteryDrawService.updatePLayerLottery(playerU);    
         

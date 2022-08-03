@@ -12,6 +12,7 @@ export interface PlayerLottery {
     src?:string;
     lastime?:string;
     lastCron?:string;
+    historyCron?:String[];
     accountBalance?:number;
     position?:string;
     positionOne?:string;

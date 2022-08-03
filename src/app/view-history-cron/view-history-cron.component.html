@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="close()">
+        <ion-icon name="arrow-undo" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Historial de tiempos</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content  *ngIf="chronos">
+  <ion-list style="padding: 0px ;">
+    
+    <ion-card *ngFor="let item of chronos; let i = index">
+      <ion-card-content>
+        <ion-grid fixed>
+          <ion-row class="chronometer-container" >
+            <ion-col size="4">
+              <p>{{i+1}} - </p>
+            </ion-col>
+            <ion-col size="8">
+                <p >
+                  {{item}}
+                </p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+</ion-content>

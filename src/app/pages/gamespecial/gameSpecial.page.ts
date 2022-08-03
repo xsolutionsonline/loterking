@@ -60,6 +60,7 @@ export class GamePageSpecial implements OnInit {
     public loadingController: LoadingController,
   ) {}
 
+<<<<<<< HEAD
  async  ngOnInit() {
     this.loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
@@ -93,6 +94,34 @@ export class GamePageSpecial implements OnInit {
                   this.presentAlertConfirmJ();  
                 }
                 
+=======
+  ngOnInit() {
+    this.Oauth.authState.subscribe((user: any) => {
+      if (user) {
+        this.customerService.getCustomerData(user.uid).subscribe((data) => {
+          this.customer = data[0];
+          const id = this.route.snapshot.paramMap.get('id');
+          this.verificado =
+            this.route.snapshot.paramMap.get('verificado') === 'true';
+            
+          this.lotteryDrawService.getLotteryDrawById(id).subscribe((data) => {
+            this.lottery = data[0];
+              debugger;
+            if (
+              new Date().getTime() >= this.lottery.date.getTime() &&
+              new Date().getTime() <= this.lottery.dateEnd.getTime() &&
+              this.lottery.date.getMinutes() + 5 < new Date().getTime()
+            ) {
+              if (this.lottery?.players?.length < 1000) {
+                this.createdRobots();
+              }
+
+              this.beginGame();
+            } else {
+              if(new Date().getTime() < this.lottery.date.getTime()){
+                this.createdCronos();
+                this.presentAlertConfirmJ();  
+>>>>>>> 74e5059a2bc9bb84232383a965c592f090132c97
               }
               
             });
@@ -498,7 +527,11 @@ export class GamePageSpecial implements OnInit {
       this.secondsOutput +
       ':' +
       this.miliSecondsOutput;
-
+      if(!playerU.historyCron){
+        playerU.historyCron = [];
+      }
+  
+      playerU.historyCron.push(playerU.lastCron);  
     this.lotteryDrawService.updatePLayerLottery(playerU);
 
     if (index >= 0) {
